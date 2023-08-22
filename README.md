@@ -20,3 +20,6 @@ pnpm dev
 3. create models
 4. npx prisma migrate dev --name init
 ```
+
+// Elegant way to handle error using zod, clientComponent
+// https://youtu.be/sdKFEo6978U?t=1840
