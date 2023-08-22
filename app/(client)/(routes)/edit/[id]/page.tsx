@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { updateTodo } from "@/app/(actions)/todo";
+import { updateTodo } from "@/app/(server)/(actions)/todo";
 import db from "@/app/lib/prismadb";
 
 const CreateNewTodo = async ({ params }: { params: { id: string } }) => {

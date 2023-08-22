@@ -1,11 +1,11 @@
 import db from "@/app/lib/prismadb";
 
-import TodoItem from "@/app/(client)/_components/todoItem";
+import TodoItem from "@/app/(client)/components/todoItem";
 import {
   createTodoSamePage,
   toggleTodo,
   deleteTodo,
-} from "@/app/(actions)/todo";
+} from "@/app/(server)/(actions)/todo";
 
 export default async function Home() {
   const todos = await db.todo.findMany();
