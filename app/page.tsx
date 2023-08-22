@@ -2,13 +2,11 @@ import Link from "next/link";
 import db from "@/app/lib/prismadb";
 
 import TodoItem from "@/app/(client)/_components/todoItem";
-import { createTodoSamePage } from "@/app/(actions)/todo";
-
-// server action
-async function toggleTodo(id: string, complete: boolean) {
-  "use server";
-  await db.todo.update({ where: { id }, data: { complete } });
-}
+import {
+  createTodoSamePage,
+  toggleTodo,
+  deleteTodo,
+} from "@/app/(actions)/todo";
 
 export default async function Home() {
   const todos = await db.todo.findMany();
@@ -56,6 +54,7 @@ export default async function Home() {
                 title={todo.title}
                 complete={todo.complete}
                 toggleTodo={toggleTodo}
+                deleteTodo={deleteTodo}
               />
             ))}
           </ul>
