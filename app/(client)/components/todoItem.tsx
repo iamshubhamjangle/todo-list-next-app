@@ -2,13 +2,14 @@
 
 import { Trash2, Pencil } from "lucide-react";
 import Link from "next/link";
+import { toast } from "react-hot-toast";
 
 type TodoItemProps = {
   id: string;
   title: string;
   complete: boolean;
   toggleTodo: (id: string, checked: boolean) => void;
-  deleteTodo: (id: string) => void;
+  deleteTodo: (id: string) => Promise<void>;
 };
 
 const TodoItem = ({
@@ -43,7 +44,11 @@ const TodoItem = ({
           size={24}
           stroke="red"
           className="cursor-pointer"
-          onClick={() => deleteTodo(id)}
+          onClick={async () =>
+            await deleteTodo(id).catch((e) =>
+              toast.error(`Delete Failed. ${e.message}`)
+            )
+          }
         />
       </div>
     </li>

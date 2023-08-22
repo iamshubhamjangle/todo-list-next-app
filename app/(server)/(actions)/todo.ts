@@ -51,6 +51,8 @@ export async function deleteTodo(id: string) {
     return;
   }
 
+  throw new Error("Intentional Error");
+
   await db.todo.delete({
     where: {
       id,
