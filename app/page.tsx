@@ -1,4 +1,3 @@
-import Link from "next/link";
 import db from "@/app/lib/prismadb";
 
 import TodoItem from "@/app/(client)/_components/todoItem";
@@ -13,30 +12,23 @@ export default async function Home() {
 
   return (
     <main>
-      <header className="flex flex-row justify-between">
-        <h1 className="mb-2 text-3xl font-medium leading-tight text-primary">
-          SIMPLE TODO LIST - Next.js (SSR)
-        </h1>
-        <Link href="/new">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            New
-          </button>
-        </Link>
+      <header className="text-3xl font-bold leading-tight text-primary">
+        SIMPLE TODO LIST
       </header>
 
       {/* SAME PAGE UPDATES */}
       <div>
         <form
           action={createTodoSamePage}
-          className="flex flex-row justify-between"
+          className="flex flex-row gap-2 justify-between py-4"
         >
           <input
             type="text"
             name="title"
-            className="my-2 block w-full p-4 pl-10 text-sm border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+            className="px-2 block w-full border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
           />
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded"
             type="submit"
           >
             Create
@@ -46,7 +38,7 @@ export default async function Home() {
 
       <div>
         {todos && (
-          <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
+          <ul className="text-gray-500 list-inside dark:text-gray-400 divide-y divide-gray-200 ">
             {todos.map((todo) => (
               <TodoItem
                 key={todo.id}

@@ -1,6 +1,7 @@
 "use client";
 
-import { Trash2 } from "lucide-react";
+import { Trash2, Pencil } from "lucide-react";
+import Link from "next/link";
 
 type TodoItemProps = {
   id: string;
@@ -18,7 +19,7 @@ const TodoItem = ({
   deleteTodo,
 }: TodoItemProps) => {
   return (
-    <li className="flex justify-between">
+    <li className="flex justify-between py-1">
       <div>
         <input
           type="checkbox"
@@ -34,12 +35,17 @@ const TodoItem = ({
           {title}
         </label>
       </div>
-      <Trash2
-        size={24}
-        stroke="red"
-        className="cursor-pointer"
-        onClick={() => deleteTodo(id)}
-      />
+      <div className="flex gap-4">
+        <Link href={`/edit/${id}`}>
+          <Pencil size={24} className="cursor-pointer" stroke="black" />
+        </Link>
+        <Trash2
+          size={24}
+          stroke="red"
+          className="cursor-pointer"
+          onClick={() => deleteTodo(id)}
+        />
+      </div>
     </li>
   );
 };

@@ -1,16 +1,15 @@
+"use server";
+
 import { redirect } from "next/navigation";
 
 import db from "@/app/lib/prismadb";
 import { revalidatePath } from "next/cache";
 
 export async function toggleTodo(id: string, complete: boolean) {
-  "use server";
   await db.todo.update({ where: { id }, data: { complete } });
 }
 
 export async function createTodoRedirect(data: FormData) {
-  "use server";
-
   const title = data.get("title")?.valueOf();
 
   if (typeof title !== "string" || !title) {
@@ -29,8 +28,6 @@ export async function createTodoRedirect(data: FormData) {
 }
 
 export async function createTodoSamePage(data: FormData) {
-  "use server";
-
   const title = data.get("title")?.valueOf();
 
   if (typeof title !== "string" || !title) {
@@ -49,8 +46,6 @@ export async function createTodoSamePage(data: FormData) {
 }
 
 export async function deleteTodo(id: string) {
-  "use server";
-
   if (!id) {
     console.error("id is required property!");
     return;
@@ -63,4 +58,30 @@ export async function deleteTodo(id: string) {
   });
 
   revalidatePath("/");
+}
+
+export async function updateTodo(data: FormData) {
+  const id = data.get("id")?.valueOf();
+  const title = data.get("title")?.valueOf();
+
+  if (!id || typeof id !== "string") {
+    console.error("Id is required property");
+    return;
+  }
+
+  if (!title || typeof title !== "string") {
+    console.error("title is required property");
+    return;
+  }
+
+  await db.todo.update({
+    where: {
+      id,
+    },
+    data: {
+      title,
+    },
+  });
+
+  redirect("/");
 }
