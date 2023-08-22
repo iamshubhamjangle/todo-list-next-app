@@ -1,6 +1,8 @@
 import Link from "next/link";
-import db from "./lib/prismadb";
-import TodoItem from "./(ui)/new/todoItem";
+import db from "@/app/lib/prismadb";
+
+import TodoItem from "@/app/(client)/_components/todoItem";
+import { createTodoSamePage } from "@/app/(actions)/todo";
 
 // server action
 async function toggleTodo(id: string, complete: boolean) {
@@ -23,19 +25,42 @@ export default async function Home() {
           </button>
         </Link>
       </header>
-      {todos && (
-        <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
-          {todos.map((todo) => (
-            <TodoItem
-              key={todo.id}
-              id={todo.id}
-              title={todo.title}
-              complete={todo.complete}
-              toggleTodo={toggleTodo}
-            />
-          ))}
-        </ul>
-      )}
+
+      {/* SAME PAGE UPDATES */}
+      <div>
+        <form
+          action={createTodoSamePage}
+          className="flex flex-row justify-between"
+        >
+          <input
+            type="text"
+            name="title"
+            className="my-2 block w-full p-4 pl-10 text-sm border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+          />
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded"
+            type="submit"
+          >
+            Create
+          </button>
+        </form>
+      </div>
+
+      <div>
+        {todos && (
+          <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
+            {todos.map((todo) => (
+              <TodoItem
+                key={todo.id}
+                id={todo.id}
+                title={todo.title}
+                complete={todo.complete}
+                toggleTodo={toggleTodo}
+              />
+            ))}
+          </ul>
+        )}
+      </div>
     </main>
   );
 }

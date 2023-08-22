@@ -20,3 +20,5 @@ pnpm dev
 3. create models
 4. npx prisma migrate dev --name init
 ```
+
+// Work on edit, delete

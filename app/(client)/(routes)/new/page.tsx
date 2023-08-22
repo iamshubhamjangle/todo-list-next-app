@@ -1,26 +1,6 @@
-import db from "@/app/lib/prismadb";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
-async function createTodo(data: FormData) {
-  "use server";
-
-  const title = data.get("title")?.valueOf();
-
-  if (typeof title !== "string" || !title) {
-    console.error("Invalid title: ", title);
-    return;
-  }
-
-  await db.todo.create({
-    data: {
-      title,
-      complete: false,
-    },
-  });
-
-  redirect("/");
-}
+import { createTodoRedirect } from "@/app/(actions)/todo";
 
 const CreateNewTodo = () => {
   return (
@@ -28,7 +8,7 @@ const CreateNewTodo = () => {
       <h1 className="mb-2 text-3xl font-medium leading-tight text-primary">
         NEW TODO
       </h1>
-      <form action={createTodo}>
+      <form action={createTodoRedirect}>
         <input
           type="text"
           name="title"
