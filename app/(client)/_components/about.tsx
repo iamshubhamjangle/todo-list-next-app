@@ -11,6 +11,7 @@ const About = () => {
         <li>
           {"Rebuild component using redirect('/') and revalidatePath('/')"}
         </li>
+        <li>{"Local sqlite database"}</li>
       </ul>
     </div>
   );
