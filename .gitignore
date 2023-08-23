@@ -38,7 +38,4 @@ next-env.d.ts
 .env
 
 # prisma
-/app/prisma/dev.db
-/app/prisma/prod.db
-/app/prisma/schema.prisma
-/app/prisma/migrations/something
+/app/_prisma
