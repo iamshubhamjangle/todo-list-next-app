@@ -46,20 +46,22 @@ export async function createTodoSamePage(data: FormData) {
 }
 
 export async function deleteTodo(id: string) {
-  if (!id) {
-    console.error("id is required property!");
-    return;
+  try {
+    if (!id) {
+      throw new Error("Id is required property");
+    }
+
+    await db.todo.delete({
+      where: {
+        id,
+      },
+    });
+
+    revalidatePath("/");
+    return { success: true, message: "" };
+  } catch (error: any) {
+    return { success: false, message: error.message || "" };
   }
-
-  throw new Error("Intentional Error");
-
-  await db.todo.delete({
-    where: {
-      id,
-    },
-  });
-
-  revalidatePath("/");
 }
 
 export async function updateTodo(data: FormData) {
