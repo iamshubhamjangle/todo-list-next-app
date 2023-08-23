@@ -1,9 +1,10 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 import db from "@/app/lib/prismadb";
-import { revalidatePath } from "next/cache";
+import { createTodoSchema } from "@/app/lib/zod/schema";
 
 export async function toggleTodo(id: string, complete: boolean) {
   await db.todo.update({ where: { id }, data: { complete } });
@@ -17,6 +18,8 @@ export async function createTodoRedirect(data: FormData) {
     return;
   }
 
+  createTodoSchema.parse({ title });
+
   await db.todo.create({
     data: {
       title,
@@ -28,21 +31,26 @@ export async function createTodoRedirect(data: FormData) {
 }
 
 export async function createTodoSamePage(data: FormData) {
-  const title = data.get("title")?.valueOf();
+  try {
+    const title = data.get("title")?.valueOf() as string;
 
-  if (typeof title !== "string" || !title) {
-    console.error("Invalid title: ", title);
-    return;
+    const { error: zodError }: any = createTodoSchema.safeParse({ title });
+    if (zodError) {
+      return { success: false, message: zodError.format() };
+    }
+
+    await db.todo.create({
+      data: {
+        title,
+        complete: false,
+      },
+    });
+
+    revalidatePath("/");
+    return { success: true, message: "" };
+  } catch (error: any) {
+    return { success: false, message: error.message };
   }
-
-  await db.todo.create({
-    data: {
-      title,
-      complete: false,
-    },
-  });
-
-  revalidatePath("/");
 }
 
 export async function deleteTodo(id: string) {
