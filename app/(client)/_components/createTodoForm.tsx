@@ -1,8 +1,9 @@
 "use client";
 
-import { createTodoSamePage } from "@/app/(server)/(actions)/todo";
 import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
+
+import { createTodoSamePage } from "@/app/(server)/(actions)/todo";
 
 const CreateTodoForm = () => {
   const [validationError, setValidationError] = useState<any>(null);

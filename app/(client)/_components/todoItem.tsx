@@ -1,21 +1,10 @@
 "use client";
 
-import { Trash2, Pencil } from "lucide-react";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
+import { Trash2, Pencil } from "lucide-react";
 
-type Response = {
-  success: string;
-  message: string;
-};
-
-type TodoItemProps = {
-  id: string;
-  title: string;
-  complete: boolean;
-  toggleTodo: (id: string, checked: boolean) => void;
-  deleteTodo: (id: string) => Promise<{ success: boolean; message: string }>;
-};
+import { TodoItemProps } from "@/app/_lib/types";
 
 const TodoItem = ({
   id,

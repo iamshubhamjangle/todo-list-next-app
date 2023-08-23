@@ -1,14 +1,17 @@
-import db from "@/app/lib/prismadb";
+import db from "@/app/_lib/prismadb";
 
-import TodoItem from "@/app/(client)/components/todoItem";
+import CreateTodoForm from "@/app/(client)/_components/createTodoForm";
+import TodoItem from "@/app/(client)/_components/todoItem";
+import About from "@/app/(client)/_components/about";
+
 import { toggleTodo, deleteTodo } from "@/app/(server)/(actions)/todo";
-import CreateTodoForm from "./(client)/components/createTodoForm";
 
 export default async function Home() {
   const todos = await db.todo.findMany();
 
   return (
     <main>
+      {/* HEADER */}
       <header className="text-3xl font-bold leading-tight text-primary">
         SIMPLE TODO LIST
       </header>
@@ -16,6 +19,7 @@ export default async function Home() {
       {/* SAME PAGE UPDATES */}
       <CreateTodoForm />
 
+      {/* TODO LIST */}
       <div>
         {todos && (
           <ul className="text-gray-500 list-inside dark:text-gray-400 divide-y divide-gray-200 ">
@@ -32,6 +36,9 @@ export default async function Home() {
           </ul>
         )}
       </div>
+
+      {/* ABOUT */}
+      <About />
     </main>
   );
 }

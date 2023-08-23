@@ -3,32 +3,32 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
-import db from "@/app/lib/prismadb";
-import { createTodoSchema } from "@/app/lib/zod/schema";
+import db from "@/app/_lib/prismadb";
+import { createTodoSchema } from "@/app/_lib/zodSchema";
 
 export async function toggleTodo(id: string, complete: boolean) {
   await db.todo.update({ where: { id }, data: { complete } });
 }
 
-export async function createTodoRedirect(data: FormData) {
-  const title = data.get("title")?.valueOf();
+// export async function createTodoRedirect(data: FormData) {
+//   const title = data.get("title")?.valueOf();
 
-  if (typeof title !== "string" || !title) {
-    console.error("Invalid title: ", title);
-    return;
-  }
+//   if (typeof title !== "string" || !title) {
+//     console.error("Invalid title: ", title);
+//     return;
+//   }
 
-  createTodoSchema.parse({ title });
+//   createTodoSchema.parse({ title });
 
-  await db.todo.create({
-    data: {
-      title,
-      complete: false,
-    },
-  });
+//   await db.todo.create({
+//     data: {
+//       title,
+//       complete: false,
+//     },
+//   });
 
-  redirect("/");
-}
+//   redirect("/");
+// }
 
 export async function createTodoSamePage(data: FormData) {
   try {

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { updateTodo } from "@/app/(server)/(actions)/todo";
-import db from "@/app/lib/prismadb";
+import db from "@/app/_lib/prismadb";
 
 const CreateNewTodo = async ({ params }: { params: { id: string } }) => {
   const todo = await db.todo.findFirst({ where: { id: params.id } });
